@@ -33,7 +33,7 @@ transport.verify().then(() => {
         text: "Verificar cuenta de Fame App",
         html: `<p>Hola: ${name} Verifca tu cuenta en Fame App</p>
          <p>Tu cuenta está casi lista, solo tienes que verificarla en el siguiente enlace: </p>
-        <a href="http://localhost:4000/confirm/${token}">Verificar Cuenta</a>
+        <a href="https://back-fame-app.up.railway.app/confirm/${token}">Verificar Cuenta</a>
 
         <p>Si no creaste esta cuenta, puedes ignorar este mensaje</p>
     

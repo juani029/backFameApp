@@ -1,5 +1,34 @@
 import {model,Schema,Document} from 'mongoose'
 import bcrypt from 'bcrypt'
+import { ICategory } from './category';
+
+enum MotivationLevel {
+    siempre,
+    usualmente,
+    algunas_veces,
+    nunca
+  }
+
+enum SecurityLevel {
+    siempre,
+    usualmente,
+    algunas_veces,
+    nunca
+}
+
+enum InterestLevel {
+    escuche,
+    aprender,
+    indagar,
+    creencias,
+    no
+}
+
+enum Role {
+    Admin,
+    Therapist,
+    Pacient
+}
 
 export interface IUser extends Document {
     email:string;
@@ -8,8 +37,24 @@ export interface IUser extends Document {
     token?:string;
     confirm?:boolean;
     bearer?:string;
-    comparePassword:(password:string) => Promise<Boolean>
+    rol?:Role;
+    age?:number;
+    sex?:string;
+    phone?:string;
+    dateOfBirty?:Date;
+    direction:string;
+    experience?:number;
+    emotion?:string[];
+    motivation?:MotivationLevel;
+    security?:SecurityLevel;
+    interest?:InterestLevel;
+    type_consult?:ICategory;
+    comparePassword:(password:string) => Promise<Boolean>;
 };
+
+
+
+  console.log(MotivationLevel.usualmente, 'acaaaaaaaa')
 
 const userSchema = new Schema({
     email: {
@@ -34,7 +79,54 @@ const userSchema = new Schema({
     },
     bearer:{
         type: String
-    }
+    },
+    rol:{
+        type:Number,
+        enum:[Role.Admin,Role.Therapist,Role.Pacient],
+        default:Role.Pacient
+    },
+    age:{
+        type:Number,
+    },
+    sex:{
+        type:String,
+    },
+    phone:{
+        type:String,
+    },
+    motivation:{
+        type:String,
+        enum:[MotivationLevel.siempre,MotivationLevel.usualmente, MotivationLevel.algunas_veces,MotivationLevel.nunca],
+    },
+    security:{
+        type:String,
+        enum:[SecurityLevel.siempre,SecurityLevel.usualmente, SecurityLevel.algunas_veces,SecurityLevel.nunca],
+    },
+    interest:{
+        type:String,
+        enum:[InterestLevel.escuche,InterestLevel.aprender, InterestLevel.indagar,InterestLevel.creencias,InterestLevel.no],
+    },
+    dateOfBirty:{
+        type:Date
+    },
+    direction:{
+        typr:String
+    },
+    experience:{
+        type:Number
+    },
+    emotion:{
+        type:Array
+    },
+    type_consult:{
+        type: Schema.Types.ObjectId, ref:'category',
+        required:true,
+       },
+
+
+},
+{
+    timestamps: true
 });
 
 // Este es un middleware para verificar si se modifico el password del usuario

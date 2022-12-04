@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 import { IUser } from '../models/user';
 
 const createJWT = (user:IUser) => {
-    return jwt.sign({ id:user._id, email: user.email }, 'somesecrettoken', {
+    console.log(user,'el usuario del token')
+    return jwt.sign({ id:user._id }, 'somesecrettoken', {
         expiresIn: '24h'
     });
 }
