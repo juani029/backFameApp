@@ -1,46 +1,53 @@
-import {model,Schema} from 'mongoose'
-import { IUser } from './user';
+import { model, Schema } from "mongoose";
+// import { IUser } from "./user";
 
 export interface IConsult {
-    titulo:string;
-    description:string;
-    type_consult:Object;
-    therapist:IUser;
-    status:number;
-    createAt:Date;
-    pacient:IUser
-};
+  title: string;
+  description: string;
+  status: number;
+  createdAt: Date;
+  price: number;
+  // type_consult: Object;
+  // therapist: IUser;
+  // pacient: IUser;
+}
 
 const consultSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: {
+    type: String,
+  },
+  status: {
+    type: Number,
+    default: 1,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  // type_consult: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "category",
+  //   required: true,
+  // },
+  // therapist: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "user",
+  //   required: true,
+  // },
+  // pacient: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "user",
+  //   required: true,
+  // },
+});
 
-   titulo:{
-      type:String,
-      required:true,
-      unique:true
-   },
-   description:{
-      type:String
-   },
-   type_consult:{
-    type: Schema.Types.ObjectId, ref:'category',
-    required:true,
-   },
-   therapist:{
-     type: Schema.Types.ObjectId, ref:'user',
-     required:true,
-   },
-   pacient:{
-     type: Schema.Types.ObjectId, ref:'user',
-     required:true,
-   },
-   status:{
-    type:Number,
-    default:1
-   },
-   createAt:{
-    type:Date,
-    default:Date.now
-   }
-})
-
-export default model<IConsult>("Consult",consultSchema);
+export default model<IConsult>("Consult", consultSchema);
