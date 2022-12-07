@@ -41,3 +41,4 @@ app.use("/confirm", confirmRoute);
 app.use("/forget-password", passwordRoute);
 app.use("/payment", stripeRoute);
 app.use("/consult", consultRoute);
+app.use("/firstLogin", userRoute);

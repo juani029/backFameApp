@@ -157,24 +157,50 @@ export const updateUser = async (
     security,
     interest,
   } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.json({ update: false });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ update: false });
+    }
+
+    user.age = age || user.age;
+    user.sex = sex || user.sex;
+    user.phone = phone || user.phone;
+    user.dateOfBirty = dateOfBirty || user.dateOfBirty;
+    user.direction = direction || user.direction;
+    user.experience = experience || user.experience;
+    user.emotion = emotion || user.emotion;
+    user.motivation = motivation || user.motivation;
+    user.security = security || user.security;
+    user.interest = interest || user.interest;
+    user.experience = experience || user.experience;
+
+    await user.save();
+
+    return res.json({ msg: "User successfully updated", user, updated: true });
+  } catch (error) {
+    console.log("Error", error);
+    return res.json({ msg: "User updated failed", updated: false });
   }
+};
 
-  user.age = age || user.age;
-  user.sex = sex || user.sex;
-  user.phone = phone || user.phone;
-  user.dateOfBirty = dateOfBirty || user.dateOfBirty;
-  user.direction = direction || user.direction;
-  user.experience = experience || user.experience;
-  user.emotion = emotion || user.emotion;
-  user.motivation = motivation || user.motivation;
-  user.security = security || user.security;
-  user.interest = interest || user.interest;
-  user.experience = experience || user.experience;
-
-  await user.save();
-
-  return res.json({ msg: "User successfully updated", user, updated: true });
+export const updateFirstLoginUser = async (
+  req: Request,
+  res: Response
+): Promise<Response | any> => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (user) {
+      user.firstLogin = true;
+      await user.save();
+      return res.json({
+        msg: "First login modified successfully",
+        modified: true,
+      });
+    }
+    return res.json({ msg: "The user doesn't exist", modified: false });
+  } catch (error) {
+    console.log("Error", error);
+  }
 };
