@@ -1,9 +1,8 @@
 import { Router } from "express";
 import {
   deleteUserById,
-  findAllUsers,
+  findUserByEmail,
   findUserById,
-  updateUser,
   updateFirstLoginUser,
 } from "../controllers/userController";
 import passport from "passport";
@@ -13,10 +12,9 @@ const router = Router();
 
 passport.use(verifyTherapist); // middleware
 
-router.get("/", passport.authenticate("jwt", { session: false }), findAllUsers);
+router.get("/", findUserByEmail);
 router.get("/:id", findUserById);
 router.delete("/:id", deleteUserById);
-router.put("/:id", updateUser);
 router.put("/:id", updateFirstLoginUser);
 
 export default router;

@@ -79,7 +79,32 @@ export const findUserById = async (
   const { id } = req.params;
   const user = await User.findById(id);
   if (user) {
-    return res.json({ msg: "User successfully found", user, found: true });
+    return res.json({
+      msg: "User search by id successfully completed",
+      user,
+      found: true,
+    });
+  }
+  return res.json({ msg: "User search by id Not Found", found: false });
+};
+
+//Permite buscar un usuario por email
+
+export const findUserByEmail = async (
+  req: Request,
+  res: Response
+): Promise<Response | undefined> => {
+  //Buscamos por id
+  const { email } = req.body;
+  // console.log(email);
+  const user = await User.findOne({ email });
+  // console.log("User by email", user);
+  if (user) {
+    return res.json({
+      msg: "User search by email successfully completed",
+      user,
+      found: true,
+    });
   }
   return res.json({ msg: "User Not Found", found: false });
 };
@@ -144,37 +169,20 @@ export const updateUser = async (
   res: Response
 ): Promise<Response | any> => {
   // Evitar registros duplicados
-  const {
-    email,
-    age,
-    sex,
-    phone,
-    dateOfBirty,
-    direction,
-    experience,
-    emotion,
-    motivation,
-    security,
-    interest,
-  } = req.body;
+  const { name, email, age, phone, dateOfBirty, firstLogin } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.json({ update: false });
+      return res
+        .status(400)
+        .json({ msg: "User doesn't exist", updated: false });
     }
 
+    user.name = name || user.name;
     user.age = age || user.age;
-    user.sex = sex || user.sex;
     user.phone = phone || user.phone;
     user.dateOfBirty = dateOfBirty || user.dateOfBirty;
-    user.direction = direction || user.direction;
-    user.experience = experience || user.experience;
-    user.emotion = emotion || user.emotion;
-    user.motivation = motivation || user.motivation;
-    user.security = security || user.security;
-    user.interest = interest || user.interest;
-    user.experience = experience || user.experience;
-
+    user.firstLogin = firstLogin || user.firstLogin;
     await user.save();
 
     return res.json({ msg: "User successfully updated", user, updated: true });
@@ -194,9 +202,11 @@ export const updateFirstLoginUser = async (
     if (user) {
       user.firstLogin = true;
       await user.save();
+      // console.log("userFirstLogin:", user.firstLogin);
       return res.json({
         msg: "First login modified successfully",
         modified: true,
+        user,
       });
     }
     return res.json({ msg: "The user doesn't exist", modified: false });

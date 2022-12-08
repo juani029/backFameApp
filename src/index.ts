@@ -12,6 +12,7 @@ import confirmRoute from "./routes/confirmRoute";
 import passwordRoute from "./routes/passwordRoute";
 import stripeRoute from "./routes/stripeRoute";
 import consultRoute from "./routes/consultRoute";
+import usersRoute from "./routes/usersRoutes";
 import { strategy } from "./middleware/passport";
 
 const app = express();
@@ -36,9 +37,10 @@ const server = app.listen(PORT, () => {
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 app.use("/user", userRoute);
+app.use("/firstLogin", userRoute);
+app.use("/users", usersRoute);
 app.use("/update", updateRoute);
 app.use("/confirm", confirmRoute);
 app.use("/forget-password", passwordRoute);
 app.use("/payment", stripeRoute);
 app.use("/consult", consultRoute);
-app.use("/firstLogin", userRoute);

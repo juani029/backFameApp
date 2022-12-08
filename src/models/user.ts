@@ -77,67 +77,17 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    bearer: {
-      type: String,
-    },
-    rol: {
-      type: Number,
-      enum: [Role.Admin, Role.Therapist, Role.Pacient],
-      default: Role.Pacient,
-    },
     age: {
       type: Number,
-    },
-    sex: {
-      type: String,
+      default: 0,
     },
     phone: {
       type: String,
-    },
-    motivation: {
-      type: String,
-      enum: [
-        MotivationLevel.siempre,
-        MotivationLevel.usualmente,
-        MotivationLevel.algunas_veces,
-        MotivationLevel.nunca,
-      ],
-    },
-    security: {
-      type: String,
-      enum: [
-        SecurityLevel.siempre,
-        SecurityLevel.usualmente,
-        SecurityLevel.algunas_veces,
-        SecurityLevel.nunca,
-      ],
-    },
-    interest: {
-      type: String,
-      enum: [
-        InterestLevel.escuche,
-        InterestLevel.aprender,
-        InterestLevel.indagar,
-        InterestLevel.creencias,
-        InterestLevel.no,
-      ],
+      default: "",
     },
     dateOfBirty: {
       type: Date,
-    },
-    direction: {
-      typr: String,
-    },
-    experience: {
-      type: Number,
-    },
-    emotion: {
-      type: Array,
-    },
-    type_consult: {
-      type: Schema.Types.ObjectId,
-      ref: "category",
-      required: true,
+      default: new Date(),
     },
     firstLogin: {
       type: Boolean,
