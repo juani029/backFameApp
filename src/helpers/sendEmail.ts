@@ -32,7 +32,7 @@ export const emailRegister = async (data: IUser) => {
     text: "Verificar cuenta de Fame App",
     html: `<p>Hola: ${name} Verifca tu cuenta en Fame App</p>
          <p>Tu cuenta está casi lista, solo tienes que verificarla en el siguiente enlace: </p>
-        <a href="http://localhost:5173/confirm/${token}">Verificar Cuenta</a>
+        <a href="https://client-fame-app-juani029.vercel.app/confirm/${token}">Verificar Cuenta</a>
 
         <p>Si no creaste esta cuenta, puedes ignorar este mensaje</p>
     
