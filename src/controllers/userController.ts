@@ -184,7 +184,7 @@ export const updateUser = async (
     user.dateOfBirty = dateOfBirty || user.dateOfBirty;
     user.firstLogin = firstLogin || user.firstLogin;
     await user.save();
-
+    console.log("usuario editado");
     return res.json({ msg: "User successfully updated", user, updated: true });
   } catch (error) {
     console.log("Error", error);
